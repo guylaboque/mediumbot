@@ -7,7 +7,7 @@ Most projects host their blog at [medium](https://medium.com/.com/), so this bot
 
 ## Configuration
 
-The parameters for the scraping are found in scraping_config:
+The parameters for the scraping are found in the [scraping config](scraping_config.json):
 * **daysSincePublishing:** Scrapes articles from these many days ago
 * **tags:** Only articles with these tags are searched
 * **keywords:** For all articles within the tags, only articles containing at least one of these keywords are recorded
