@@ -8,8 +8,8 @@ Most projects host their blog at [GitHub Pages](https://medium.com/.com/), so th
 ## Parameters
 
 The parameters for the scraping are found in the parameters file:
-* daysSincePublishing: Scrapes articles from these many days ago
-* tags: Only articles with these tags are searched
-* keywords: For all articles within the tags, only articles containing at least one of these keywords are recorded
-* blacklist: If there are obvious scam-projects or article spammers, project containing these keywords will not be recorded
-* likeThreshold: To filter for projects with certain traction, projects with at least this many likes are displayed at the top of the telegram message
+* **daysSincePublishing:** Scrapes articles from these many days ago
+* **tags:** Only articles with these tags are searched
+* **keywords:** For all articles within the tags, only articles containing at least one of these keywords are recorded
+* **blacklist:** If there are obvious scam-projects or article spammers, project containing these keywords will not be recorded
+* **likeThreshold:** To filter for projects with certain traction, projects with at least this many likes are displayed at the top of the telegram message
