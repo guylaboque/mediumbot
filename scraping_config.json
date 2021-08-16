@@ -3,5 +3,5 @@
         "tags": ["defi", "ethereum", "decentralized-finance", "cryptocurrency"],
         "keywords": ["introduc","farm","launch", "testnet", "signup", "genesis", "hello", "mining", "reward"],
         "blacklist": ["$wish", "wish finance", "wisher"],
-        "likeThreshold": 5
+        "likeThreshold": 4
 }
