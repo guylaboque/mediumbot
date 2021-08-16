@@ -1,7 +1,7 @@
 {
         "daysSincePublishing": 2,
         "tags": ["defi", "ethereum", "decentralized-finance", "cryptocurrency"],
-        "keywords": ["introduc","farm","launch", "testnet", "signup", "genesis", "hello", "mining", "reward"],
+        "keywords": ["introduc","farm","launch", "testnet", "signup", "genesis", "hello", "mining", "reward", "retroactive"],
         "blacklist": ["$wish", "wish finance", "wisher"],
         "likeThreshold": 4
 }
