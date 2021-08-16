@@ -7,7 +7,7 @@ Most projects host their blog at [GitHub Pages](https://medium.com/.com/), so th
 
 ## Parameters
 
-The parameters for the scraping are found in the parameters file:
+The parameters for the scraping are found in the config file:
 * **daysSincePublishing:** Scrapes articles from these many days ago
 * **tags:** Only articles with these tags are searched
 * **keywords:** For all articles within the tags, only articles containing at least one of these keywords are recorded
