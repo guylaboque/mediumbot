@@ -7,7 +7,7 @@ import telegramsender as tgs
 
 ## Set parameters
 #   Import scraping config
-with open('scraping_config.json', 'r') as f:
+with open('../scraping_config.json', 'r') as f:
     config = json.load(f)
 
     daysSincePublishing = config['daysSincePublishing']
@@ -19,7 +19,7 @@ with open('scraping_config.json', 'r') as f:
 crawlDate = date.today() - timedelta(days=daysSincePublishing)
 
 #   Import telegram bot config
-with open('bot_config.json', 'r') as f:
+with open('../bot_config.json', 'r') as f:
     telegramConfig = json.load(f)
 
     BOT_TOKEN = telegramConfig['BOT_TOKEN']
@@ -38,7 +38,7 @@ telegramLikesHeader = likesEmoji + ' <b>Min likes:</b> ' + str(likeThreshold+1)
 telegramMessageHeader = telegramNewLine +  '\n' + telegramDateHeader + '\n' + telegramTagHeader + '\n' + telegramKeywordHeader + '\n' + telegramLikesHeader + '\n' + telegramNewLine
 
 #  Logging
-logging.basicConfig(filename='telegram_bot_logs.log', level=logging.DEBUG)
+logging.basicConfig(filename='../telegram_bot_logs.log', level=logging.DEBUG)
 logging.info('\nBot successfully started on ' + str(date.today()))
 
 ## Crawl relevant Medium pages for articles matching the filters
