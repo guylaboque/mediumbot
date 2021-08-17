@@ -5,4 +5,5 @@
 cd "$(dirname "$0")"
 cd ..
 sudo wget --output-document=scraping_config.json https://raw.githubusercontent.com/guylaboque/mediumbot/main/scraping_config.json # Pull new scraping config file
-python src/main.py # Run medium scraper bot
+cd src
+python main.py # Run medium scraper bot
