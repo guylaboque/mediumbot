@@ -4,6 +4,6 @@
 
 cd "$(dirname "$0")"
 cd ..
-sudo wget --output-document=scraping_config.json https://raw.githubusercontent.com/guylaboque/mediumbot/main/scraping_config.json # Pull new scraping config file
+sudo wget --output-document=scraping_config.json --append-output=telegram_bot_logs.log https://raw.githubusercontent.com/guylaboque/mediumbot/main/scraping_config.json # Pull new scraping config file
 cd src
 python main.py # Run medium scraper bot
