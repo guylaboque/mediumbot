@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The crypto space is often to fast to keep track of. Never miss the start of a cool farming opportunity or the genesis group of a new project again! 
+The crypto space is often too fast to keep track of. Never miss the start of a cool farming opportunity or the genesis group of a new project again! 
 Most projects host their blog at [medium](https://medium.com/.com/), so this bot scrapes through the blog posts, filters them for interesting opportunities and sends the results to a telegram group (click [here](https://t.me/joinchat/O5aS5xkp0zI4Zjli) to join).
 
 <img src="https://user-images.githubusercontent.com/82145013/129738985-201911e9-1b15-4eab-adf5-0840a1c3e50e.jpeg" width="250">
