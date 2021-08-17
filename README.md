@@ -14,10 +14,17 @@ The parameters for the scraping are found in the [scraping config](scraping_conf
 * **blacklist:** If there are obvious scam-projects or article spammers, project containing these keywords will not be recorded
 * **likeThreshold:** To filter for projects with certain traction, projects with at least this many likes are displayed at the top of the telegram message
 
-The parameters for the telegram bot should be saved in a separate private file in the root folder since especially the bot token should not be shared. The file should have the following format:
+The parameters for the telegram bot should be saved in a separate private file called bot_config.json in the root folder since especially the bot token should not be shared. The file should have the following format:
 ```json
 {
     "BOT_TOKEN": "telegramBotToken",
     "CHAT_ID": "telegramChatId"
 }
 ```
+
+## Automation on a Raspberry Pi
+If you want to automate the bot, you can do so e.g. by creating a cronjob for [pi_run.sh](run/pi_run.sh) on a raspberry pi. The pi_run.sh script:
+* Pulls the latest version of the scraping config from github
+* Executes the main script and sends it to a telegrambot
+
+**Remember to add the bot_config.json file as well as install beautifulsoup4 for python3 and create your [bot](https://core.telegram.org/bots) + chatgroup on telegram!**
