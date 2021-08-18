@@ -4,6 +4,16 @@ from bs4 import BeautifulSoup
 
 from .article import MediumArticle
 
+def convert_str_to_number(x):
+    final_number = 0
+    num_map = {'K':1000, 'M':1000000, 'B':1000000000}
+    if x.isdigit():
+        final_number = int(x)
+    else:
+        if len(x) > 1:
+            final_number = float(x[:-1]) * num_map.get(x[-1].upper(), 1)
+    return int(final_number)
+
 def getArticles(url):
     response = requests.get(url)
     mediumPage = BeautifulSoup(response.text, 'html.parser')
@@ -25,7 +35,7 @@ def getArticles(url):
         if not likeData:
             likes = "0"
         else:
-            likes = str(likeData[0].string)
+            likes = str(convert_str_to_number(likeData[0].string))
 
         article = MediumArticle(title, link, likes)
         articles.append(article)
