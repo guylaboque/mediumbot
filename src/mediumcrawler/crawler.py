@@ -29,7 +29,12 @@ def getArticles(url):
             continue
         title = str(title_check[0].string) #create comparable string of title
 
-        link = blogPost("a", attrs={"data-action": "open-post"})[0].get('href').split("?")[0]
+        titlelink = blogPost("a", attrs={"data-action": "open-post"})[0].get('href').split("?")[0]
+
+        author = blogPost("a", attrs={"data-action": "show-user-card"})[1].string
+
+        authorlink = blogPost("a", attrs={"data-action": "show-user-card"})[0].get('href').split("?")[0]
+
         likeData = blogPost("button", attrs={"data-action": "show-recommends"})
 
         if not likeData:
@@ -37,7 +42,7 @@ def getArticles(url):
         else:
             likes = str(convert_str_to_number(likeData[0].string))
 
-        article = MediumArticle(title, link, likes)
+        article = MediumArticle(title, titlelink, author, authorlink ,likes)
         articles.append(article)
 
     if len(articles) == 0:

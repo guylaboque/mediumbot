@@ -14,16 +14,20 @@ def createHtmlMessage(articleList, telegramMessageHeader, likesThreshold):
     articleList.sort(key= lambda article: int(article.likes), reverse=True) #sort by likes
 
     for article in articleList: #all articles above likesThreshold
-        if int(article.likes) > likesThreshold:
+        if int(article.likes) >= likesThreshold:
             htmlTitle = urllib.parse.quote(html.escape(article.title))
-            telegramMessageHtml += '\n<a href="' + article.link + '">' + htmlTitle + '</a> (likes: '+ article.likes + ')\n'
+            htmlAuthor = urllib.parse.quote(html.escape(article.author))
+            #telegramMessageHtml += '\n<a href="' + article.titlelink + '">' + htmlTitle + '</a> (likes: '+ article.likes + ')\n'
+            telegramMessageHtml += '\n<a href="' + article.titlelink + '">' + htmlTitle + '</a>\n(<a href="' + article.authorlink + '">' + htmlAuthor + '</a>, likes: '+ article.likes + ')\n'
 
-    telegramMessageHtml += "\n---------------------------------------\n" + lessLikesEmoji + " <b>Articles with " + str(likesThreshold) + " likes or less:</b>\n---------------------------------------\n"
+    #telegramMessageHtml += "\n---------------------------------------\n" + lessLikesEmoji + " <b>Articles with " + str(likesThreshold) + " likes or less:</b>\n---------------------------------------\n"
 
-    for article in articleList: #all articles below likesThreshold
-        if int(article.likes) <= likesThreshold:
-            htmlTitle = urllib.parse.quote(html.escape(article.title))
-            telegramMessageHtml += '\n<a href="' + article.link + '">' + htmlTitle + '</a> (likes: '+ article.likes + ')\n'
+    #for article in articleList: #all articles below likesThreshold
+    #    if int(article.likes) < likesThreshold:
+    #        htmlTitle = urllib.parse.quote(html.escape(article.title))
+    #        htmlAuthor = urllib.parse.quote(html.escape(article.author))
+    #        telegramMessageHtml += '\n<a href="' + article.titlelink + '">' + htmlTitle + '</a> (likes: '+ article.likes + ')\n'
+    #        #telegramMessageHtml += '\n<a href="' + article.titlelink + '">' + htmlTitle + '</a> (<a href="' + article.authorlink + '">' + htmlAuthor + '</a>, likes: '+ article.likes + ')\n'
 
     return telegramMessageHtml
 
