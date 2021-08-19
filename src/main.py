@@ -1,7 +1,6 @@
 from datetime import date, timedelta
 import logging
 import json
-import sys
 
 import mediumcrawler as mcr
 import telegramsender as tgs
@@ -42,7 +41,7 @@ telegramNewLine = '---------------------------------------'
 telegramDateHeader = '<b><u>Medium articles from ' + str(crawlDate) + '</u></b>'
 telegramTagHeader = tagEmoji + ' <b>Tags:</b> ' + ', '.join(tags)
 telegramKeywordHeader = keywordEmoji + ' <b>Keywords:</b> ' +  ', '.join(keywords)
-telegramLikesHeader = likesEmoji + ' <b>Min likes:</b> ' + str(likeThreshold+1)
+telegramLikesHeader = likesEmoji + ' <b>Min likes:</b> ' + str(likeThreshold)
 telegramMessageHeader = telegramNewLine +  '\n' + telegramDateHeader + '\n' + telegramTagHeader + '\n' + telegramKeywordHeader + '\n' + telegramLikesHeader + '\n' + telegramNewLine
 
 #  Logging
