@@ -8,7 +8,7 @@ import pathlib
 import mediumcrawler as mcr
 import telegramsender as tgs
 
-scrapingConfig = pathlib.Path(__file__).parent.parent.resolve().joinpath('scraping_config.json')
+scrapingConfig = pathlib.Path(__file__).resolve().parents[1].joinpath('scraping_config.json')
 try: #   Import scraping config
    with scrapingConfig.open('r') as f:
         config = json.load(f)
@@ -32,7 +32,7 @@ except Exception:
 
 crawlDate = date.today() - timedelta(days=daysSincePublishing) #calculate crawl date
 
-botConfig = pathlib.Path(__file__).parent.parent.resolve().joinpath('bot_config.json')
+botConfig = pathlib.Path(__file__).resolve().parents[1].joinpath('bot_config.json')
 try: #   Import telegram bot config
     with botConfig.open('r') as f:
         telegramConfig = json.load(f)
