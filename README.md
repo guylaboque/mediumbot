@@ -14,7 +14,8 @@ The parameters for the scraping are found in the [scraping config](scraping_conf
 * **tags:** Only articles with these tags are searched
 * **keywords:** For all articles within the tags, only articles containing at least one of these keywords are recorded
 * **blacklist:** If there are obvious scam-projects or article spammers, project containing these keywords will not be recorded
-* **likeThreshold:** To filter for projects with certain traction, projects with at least this many likes are displayed at the top of the telegram message
+* **minLikes:** To filter for projects with certain traction, projects with at least this many likes are displayed at the top of the telegram message
+* **categories:** To divide the blog posts into several categories for readability
 
 The parameters for the telegram bot should be saved in a separate private file called bot_config.json in the root folder since especially the bot token should not be shared. The file should have the following format:
 ```json
