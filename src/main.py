@@ -1,69 +1,80 @@
 from datetime import date, timedelta
 import logging
 import json
+import time
+import sys
+import pathlib
 
 import mediumcrawler as mcr
 import telegramsender as tgs
 
-## Set parameters
-#   Import scraping config
-try:
-    with open('../scraping_config.json', 'r') as f:
+scrapingConfig = pathlib.Path(__file__).parent.parent.resolve().joinpath('scraping_config.json')
+try: #   Import scraping config
+   with scrapingConfig.open('r') as f:
         config = json.load(f)
 
         daysSincePublishing = config['daysSincePublishing']
-        tags = config['tags']
+        tags = config['searchTags']
         keywords = config['keywords']
         blacklist = config['blacklist']
-        likeThreshold = config['likeThreshold']
+        minLikes = config['minLikes']
+        configCategories = config['categories']
+        
+        categories = []
+        for category in configCategories:
+            newCategory = mcr.categories.Category(category["name"], category["keywords"], category["order"])
+            categories.append(newCategory)
+        categories.sort(key=lambda x: x.order) #sort categories by order  
+        mcr.crawler.setDefaultCategory(categories, config['defaultCategory']) #set default category
 except Exception:
     logging.exception("Something went wrong while reading the scraping config")
+    sys.exit(1)
 
+crawlDate = date.today() - timedelta(days=daysSincePublishing) #calculate crawl date
 
-crawlDate = date.today() - timedelta(days=daysSincePublishing)
-
-#   Import telegram bot config
-try:
-    with open('../bot_config.json', 'r') as f:
+botConfig = pathlib.Path(__file__).parent.parent.resolve().joinpath('bot_config.json')
+try: #   Import telegram bot config
+    with botConfig.open('r') as f:
         telegramConfig = json.load(f)
 
         BOT_TOKEN = telegramConfig['BOT_TOKEN']
         CHAT_ID = telegramConfig['CHAT_ID']
 except Exception:
         logging.exception("Something went wrong while reading the bot config")
-
-#   Create telegram styling and header
-tagEmoji = '\U0001F3F7' #to set before the tag explanation
-keywordEmoji = '\U0001F511'	 #to set before the keyword explanation
-likesEmoji = '\U0001F44D' #to set before the likes explanation
-
-telegramNewLine = '---------------------------------------'
-telegramDateHeader = '<b><u>Medium articles from ' + str(crawlDate) + '</u></b>'
-telegramTagHeader = tagEmoji + ' <b>Tags:</b> ' + ', '.join(tags)
-telegramKeywordHeader = keywordEmoji + ' <b>Keywords:</b> ' +  ', '.join(keywords)
-telegramLikesHeader = likesEmoji + ' <b>Min likes:</b> ' + str(likeThreshold)
-telegramMessageHeader = telegramNewLine +  '\n' + telegramDateHeader + '\n' + telegramTagHeader + '\n' + telegramKeywordHeader + '\n' + telegramLikesHeader + '\n' + telegramNewLine
+        sys.exit(1)
 
 #  Logging
-logging.basicConfig(filename='../telegram_bot_logs.log', level=logging.DEBUG)
+logging.basicConfig(filename = str(pathlib.Path(__file__).parent.parent.resolve().joinpath('telegram_bot_logs.log')), level=logging.DEBUG)
 logging.info('\nBot successfully started on ' + str(date.today()))
 
-## Crawl relevant Medium pages for articles matching the filters
-articleList = [] #initiate list for all articles in all tags
+articleList = [] #initiate list for all articles in all tags and categories
 
-try:
-    for url in mcr.urls.getTagUrls(tags, crawlDate): #for all pages corresponding to defined tags
-        articlesInTag = mcr.crawler.getArticles(url)
-        filteredArticlesInTag = mcr.filters.filterBlacklist(mcr.filters.filterKeywords(articlesInTag, keywords), blacklist)
-        articleList += filteredArticlesInTag
-except Exception:
-    logging.exception("Something went wrong with the medium crawler")
+for tag in tags: #Get list of all relevant articles for all tags
+    try:
+        articlesInTag = mcr.crawler.getArticles(tag, crawlDate) #Get articles for tag
+        articlesInTag = mcr.listfilters.filterKeywords(articlesInTag, keywords, ["title"], keep=True) #Apply filters
+        articlesInTag = mcr.listfilters.filterKeywords(articlesInTag, blacklist, ["title", "author"], keep=False) #Apply filters
+        articlesInTag = mcr.listfilters.filterLikes(articlesInTag, minLikes) #Apply filters
+        articleList = mcr.crawler.mergeArticleLists(articleList, articlesInTag) #Add to articles of other tags
+    except Exception:
+        logging.exception("Something went wrong with the medium crawler in tag " + tag)
+    time.sleep(3)
 
-articleList = list(set(articleList)) #remove duplicate entries
+for article in articleList: #distribute articles to categories
+    distributed = False
+    for category in categories:
+        if  article.checkKeywords(category.keywords, ["title", "tags", "author"], ) and not category.default: #Add to first category that hits a keyword and is not the default category
+            category.addArticle(article)
+            distributed = True
+            break
+    if distributed is False:
+        categories[mcr.crawler.getDefaultCategory(categories)].addArticle(article) #if there is no matching category, add to last category (=uncategorized)
 
-## Send telegram message
-try:
-    telegramMessageHtml = tgs.createHtmlMessage(articleList, telegramMessageHeader, likeThreshold)
-    messageSent = tgs.sentTelegramMessage(BOT_TOKEN, CHAT_ID, telegramMessageHtml)
+try: # Send telegram message in main channel
+    telegramMessageHeader = tgs.createMessageHeader(tags, keywords, crawlDate, minLikes)
+    telegramMessageBody = tgs.createMessageBody(categories)
+    telegramMessage = telegramMessageHeader + telegramMessageBody
+    message = tgs.sendMessage(BOT_TOKEN, CHAT_ID, telegramMessage)
 except Exception:
     logging.exception("Something went wrong with the telegram sender")
+    sys.exit(1)

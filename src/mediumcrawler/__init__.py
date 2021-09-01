@@ -1,6 +1,7 @@
-__all__ = ["filters", "urls", "crawler", "article"]
+__all__ = ["listfilters", "urls", "crawler", "article", "categories"]
 
-from . import filters
+from . import listfilters
 from . import urls
 from . import crawler
 from . import article
+from . import categories
