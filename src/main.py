@@ -44,7 +44,7 @@ except Exception:
         sys.exit(1)
 
 #  Logging
-logging.basicConfig(filename = str(pathlib.Path(__file__).parent.parent.resolve().joinpath('telegram_bot_logs.log')), level=logging.DEBUG)
+logging.basicConfig(filename = str(pathlib.Path(__file__).resolve().parents[1].joinpath('telegram_bot_logs.log')), level=logging.DEBUG)
 logging.info('\nBot successfully started on ' + str(date.today()))
 
 articleList = [] #initiate list for all articles in all tags and categories
