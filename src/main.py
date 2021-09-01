@@ -6,7 +6,7 @@ import sys
 import pathlib
 
 import mediumcrawler as mcr
-import telegramhelper as tgs
+import telegramsender as tgs
 
 scrapingConfig = pathlib.Path(__file__).parent.parent.resolve().joinpath('scraping_config.json')
 try: #   Import scraping config
