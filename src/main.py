@@ -71,10 +71,10 @@ for article in articleList: #distribute articles to categories
         categories[mcr.crawler.getDefaultCategory(categories)].addArticle(article) #if there is no matching category, add to last category (=uncategorized)
 
 try: # Send telegram message in main channel
-    telegramMessageHeader = tgs.telegramsender.createMessageHeader(tags, keywords, crawlDate, minLikes)
-    telegramMessageBody = tgs.telegramsender.createMessageBody(categories)
+    telegramMessageHeader = tgs.createMessageHeader(tags, keywords, crawlDate, minLikes)
+    telegramMessageBody = tgs.createMessageBody(categories)
     telegramMessage = telegramMessageHeader + telegramMessageBody
-    message = tgs.telegramsender.sendMessage(BOT_TOKEN, CHAT_ID, telegramMessage)
+    message = tgs.sendMessage(BOT_TOKEN, CHAT_ID, telegramMessage)
 except Exception:
     logging.exception("Something went wrong with the telegram sender")
     sys.exit(1)
