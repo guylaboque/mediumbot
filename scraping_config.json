@@ -1,7 +1,16 @@
 {
         "daysSincePublishing": 2,
-        "tags": ["defi", "ethereum", "decentralized-finance", "cryptocurrency", "nft"],
-        "keywords": ["introduc","farm","launch", "testnet", "signup", "genesis", "whitelist", "hello world", "hello, world", "mining", "reward", "announc"],
-        "blacklist": ["$wish", "wish finance", "wisher", "weekly report", "weekly upd"],
-        "likeThreshold": 10
+        "searchTags": ["defi", "ethereum", "bsc", "binance", "binance-smart-chain", "avax", "Fantom", "solanas", "decentralized-finance", "cryptocurrency", "Yield-farming"],
+        "keywords": ["introduc","farm","launch", "testnet", "whitelist", "signup", "genesis", "hello world", "hello, world", "mining", "reward", "announc", "new", "live", "tokenomics", " ico", " ido", " ieo"],
+        "blacklist": ["$wish", "wish finance", "wisher", "weekly report", "weekly upd", "moonwilly", "bug bounty"],
+        "minLikes": 50,
+        "categories": [
+                {"name": "Ethereum", "keywords": ["Ethereum", "eth"], "order": 1},
+                {"name": "NFTs", "keywords": ["NFT", "non-fungible-token"], "order": 2},
+                {"name": "L2s", "keywords": ["L2", "Arbitrum", "Optimism", "zksync", "zk-rollups"], "order": 3},
+                {"name": "Sidechains", "keywords": ["Matic ", "xDAI", "skale", "POA", "Polygon"], "order": 4},
+                {"name": "L1s", "keywords": ["BSC", "Binance Smart Chain", "Avalanche", "Avax", "Solana", "Solanas", "Sol", "Kusama", "KSM", "Polka", "dot", "Fantom", "FTM", "Cosmos", "Atom"], "order": 5},
+                {"name": "Uncategorized", "keywords": [], "order": 100}
+        ],
+        "defaultCategory": "Ethereum"
 }
