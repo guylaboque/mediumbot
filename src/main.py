@@ -72,7 +72,7 @@ for article in articleList: #distribute articles to categories
 
 try: # Send telegram message in main channel
     telegramMessageHeader = tgs.createMessageHeader(tags, keywords, crawlDate, minLikes)
-    telegramMessageList = tgs.createTelegramMessage(telegramMessageHeader, categories, 1500)
+    telegramMessageList = tgs.createTelegramMessage(telegramMessageHeader, categories)
     tgs.sendMessageList(BOT_TOKEN, CHAT_ID, telegramMessageList)
 except Exception:
     logging.exception("Something went wrong with the telegram sender")
