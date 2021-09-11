@@ -5,6 +5,8 @@ import requests
 import urllib
 import html
 import logging
+import time
+from bs4 import BeautifulSoup
 
 # Styling
 emojis = {
@@ -49,6 +51,30 @@ def createMessageBody(categories):
 
     return telegramBody
 
+def createTelegramMessage(msgHeader, categories, maxLen = 4000):
+    currentMsg = msgHeader
+    msgList = []
+
+    for category in categories:
+            if len(category.articles) >= 1:
+                categoryHeader = createCategoryHeader(category)
+                if len(BeautifulSoup(currentMsg + categoryHeader, features = "html.parser").text) < maxLen:
+                    currentMsg += categoryHeader
+                else:
+                    msgList.append(currentMsg)
+                    currentMsg = categoryHeader
+
+                for article in category.articles: #all articles above likesThreshold
+                    articleEntry = createArticleEntry(article)
+                    if len(BeautifulSoup(currentMsg + articleEntry, features = "html.parser").text) < maxLen:
+                        currentMsg += articleEntry
+                    else:
+                        msgList.append(currentMsg)
+                        currentMsg = articleEntry
+
+    msgList.append(currentMsg)
+    return(msgList)
+
 # Send telegram message
 def sendMessage(botToken, chatId, bot_message):
     send_text = 'https://api.telegram.org/bot' + botToken + '/sendMessage?chat_id=' + chatId + '&parse_mode=HTML&disable_web_page_preview=true&text=' + bot_message
@@ -61,3 +87,8 @@ def sendMessage(botToken, chatId, bot_message):
         logging.error('Error sending telegram message: ' + str(response))
 
     return response
+
+def sendMessageList(botToken, chatId, msgList):
+    for msg in msgList:
+        sendMessage(botToken, chatId, msg)
+        time.sleep(3)
