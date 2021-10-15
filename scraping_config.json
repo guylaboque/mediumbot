@@ -2,7 +2,7 @@
         "daysSincePublishing": 2,
         "searchTags": ["defi", "ethereum", "bsc", "binance", "binance-smart-chain", "avax", "Fantom", "solanas", "decentralized-finance", "cryptocurrency", "Yield-farming"],
         "keywords": ["introduc","farm","launch", "testnet", "whitelist", "signup", "genesis", "hello world", "hello, world", "mining", "reward", "announc", "new ", "live", "tokenomics", " ico", " ido", " ieo"],
-        "blacklist": ["$wish", "wish finance", "wisher", "weekly report", "weekly upd", "moonwilly", "bug bounty", "newsletter"],
+        "blacklist": ["$wish", "wish finance", "wisher", "weekly report", "weekly upd", "moonwilly", "bug bounty", "newsletter", "pluto"],
         "minLikes": 50,
         "categories": [
                 {"name": "Ethereum", "keywords": ["Ethereum", "eth"], "order": 1},
